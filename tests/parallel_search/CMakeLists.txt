@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.8)
+
+add_subdirectory(words_list/TU_WORDS_LIST)
+#add_subdirectory(main/tu_main_01)
+#add_subdirectory(main/tu_main_02)
+#add_subdirectory(main/tu_main_03)
+#add_subdirectory(base_math/tu_base_math_01)
+#add_subdirectory(base_math/tu_base_math_02)
+#add_subdirectory(advanced_math/tu_advanced_math_01)
+#add_subdirectory(advanced_math/tu_advanced_math_02)
