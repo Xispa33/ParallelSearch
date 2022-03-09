@@ -1,32 +1,42 @@
 #include "words_list.h"
 
+static int asciiSort(const void* word_a, const void* word_b);
+
 /**
  * @brief WordsList::WordsList
  * Constructor
  */
-WordsList::WordsList(const int nb_char)
+WordsList::WordsList()
 {
+    /* vector containing all words of a list */
     vector<string> words_vector;
 
-    EXTERN__GetRandomWords(nb_char, &words_vector);
-    EXTERN__ShuffleWords(&words_vector);
-    //EXTERN__DisplayAllWords(&words_vector);
+    /* Retrieving/generating all words of the list */
+    WORDS_LIST__Init(&words_vector);
 
+    /* Converting the vector containing all words to a map of lists */
     WORDS_LIST__ProcessWordsList(&words_vector);
 
+    /* Compute the number of words from the map of lists 
+     * It should be equal to the number of words originally created 
+     * */
     const int w_size = WORDS_LIST__ComputeWordsListSize();
 
+    /* Store number of words in  _words_list_size attribute */
     WORDS_LIST__SetWordsListSize(w_size);
 
-    WORD_LIST__DisplayWordsList();
+    //WORD_LIST__DisplayWordsList();
 }
 
-/*
-vector<string>* WordsList::WORDS_LIST__GetWordsList()
+void WordsList::WORDS_LIST__Init(vector<string>* words_vector)
 {
-    vector<string>* a;
-    return a;
-}*/
+    USR_FCT__GetRandomWords(words_vector);
+
+    /* Shuffle of the words */
+    USR_FCT__ShuffleWords(words_vector);
+
+    //USR_FCT__DisplayAllWords(&words_vector);
+}
 
 void WordsList::WORDS_LIST__SetWordsListSize(const int size)
 {
@@ -74,7 +84,7 @@ void WordsList::WORDS_LIST__CreateWordsList(vector<string>* words_vector)
 void WordsList::WORDS_LIST__SortWordsList()
 {
     for (map<char,vector<string> >::iterator it_map=this->_words_list.begin(); it_map!=this->_words_list.end(); ++it_map) {
-        qsort(&(it_map->second[0]), it_map->second.size(), sizeof(string), EXTERN__WordsAsciiComparison);
+        qsort(&(it_map->second[0]), it_map->second.size(), sizeof(string), asciiSort);
     }
 }
 
@@ -92,57 +102,36 @@ void WordsList::WORD_LIST__DisplayWordsList()
     }
 }
 
+vector<string>* WordsList::WORDS_LIST__GetListFromKey(char key)
+{
+    return &(this->_words_list[key]);
+}
+
 WordsList::~WordsList()
 {
     
 }
 
-extern void EXTERN__GetRandomWords(const int nb_char, vector<string>* words_vector)
-{
-    string word(nb_char, 'A');
-    for (int i = 'A'; i <= 'C'; ++i) {
-        word[0] = i; 
-        for (int j = 'A'; j <= 'C'; ++j) {
-            word[1] = j;
-            for (int k = 'A'; k <= 'C'; ++k) {
-                word[2] = k; 
-                for (int l = 'A'; l <= 'C'; ++l) {
-                    word[3] = l; 
-                    words_vector->push_back(word);
-                }
-            }
-        }
-    }
-}
-
-extern void EXTERN__DisplayAllWords(vector<string>* words_vector)
-{
-    vector<string>::iterator it;
-    for (it = words_vector->begin(); it != words_vector->end(); ++it) {
-        cout << *it << endl;
-    }
-}
-
-extern void EXTERN__ShuffleWords(vector<string>* words_vector)
-{
-    // obtain a time-based seed
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    shuffle(words_vector->begin(), words_vector->end(), default_random_engine(seed));
-}
-
-extern int EXTERN__WordsAsciiComparison(const void* word_a, const void* word_b)
+int asciiSort(const void* word_a, const void* word_b)
 {
     int i = 0;
     string tmp_word_a = (*(string*) word_a);
     string tmp_word_b = (*(string*) word_b);
-    do {
-        if ((int) (tmp_word_a[i] - tmp_word_b[i]) != 0) {
-            return (int) (tmp_word_a[i] - tmp_word_b[i]);
-        }
-        else {
-            i++;
-        }
-    } while (tmp_word_a[i] == tmp_word_b[i]);
-    
-    return (int) (tmp_word_a[i] - tmp_word_b[i]);
+
+    if (tmp_word_a.size() != tmp_word_b.size()) {
+        return tmp_word_a.size() - tmp_word_b.size();
+    }
+    else {
+
+        do {
+            if ((int) (tmp_word_a[i] - tmp_word_b[i]) != 0) {
+                break;
+            }
+            else {
+                i++;
+            }
+        } while (tmp_word_a[i] == tmp_word_b[i]);
+        
+        return (int) (tmp_word_a[i] - tmp_word_b[i]);
+    }
 }

@@ -16,3 +16,7 @@ target_include_directories(libwords_list PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc)
 # If PUBLIC is changed to INTERFACE, it is the opposite. base_cxx won't
 # be able to call the constant. INTERFACE has the opposite effect of PRIVATE.
 target_compile_definitions(libwords_list PUBLIC CXX_VERSION=11)
+
+target_link_libraries(libwords_list PUBLIC 
+    libusr_fct
+)

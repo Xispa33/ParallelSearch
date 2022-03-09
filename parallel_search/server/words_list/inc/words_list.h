@@ -7,38 +7,35 @@
 #include <iostream>
 #include <map>
 #include <vector>
+#include <vector>
 #include <algorithm>
 #include <random>
-#include <chrono>       
+#include <chrono>
+#include <usr_fct.h>     
 
 using namespace std;
 
 #define WORDS_LIST__C_NB_CHAR_ALPHABET (26) 
 
-extern void EXTERN__GetRandomWords(const int nb_char, vector<string>* words_vector);
-extern void EXTERN__ShuffleWords(vector<string>* words_vector);
-extern void EXTERN__DisplayAllWords(vector<string>* words_vector);
-extern int EXTERN__WordsAsciiComparison(const void* word_a, const void* word_b);
-
-
 class WordsList
 {
     public:
-        WordsList(const int nb_char);
+        WordsList();
         ~WordsList();
 
         int WORDS_LIST__GetWordsListSize();
+        vector<string>* WORDS_LIST__GetListFromKey(char key);
         void WORD_LIST__DisplayWordsList();
         //vector<string>* void WORDS_LIST__GetWordsList();
         //vector<string>* WORDS_LIST__GetAllWords();
-
     private:
         // Methods
         void WORDS_LIST__ProcessWordsList(vector<string>* words_vector);
+        int WORDS_LIST__ComputeWordsListSize();
         void WORDS_LIST__CreateWordsList(vector<string>* words_vector);
         void WORDS_LIST__SortWordsList();
         void WORDS_LIST__SetWordsListSize(const int size);
-        int WORDS_LIST__ComputeWordsListSize();
+        void WORDS_LIST__Init(vector<string>* words_vector);
         //vector<string> WORDS_LIST__GetWordsFromFile(const string filepath);
         //map<char, vector<string>> WORDS_LIST__GenerateWordsList();
 
