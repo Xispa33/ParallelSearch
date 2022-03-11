@@ -22,6 +22,8 @@ target_link_libraries(${TEST_NAME} PUBLIC
     libeng
 )
 
+#set (CMAKE_CXX_FLAGS "-DNDEBUG")
+
 #set_target_properties(${TEST_NAME} PROPERTIES 
 #    SUFFIX .a
 #)

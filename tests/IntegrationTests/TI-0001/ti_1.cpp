@@ -1,11 +1,21 @@
 #include "engine.h"
+#include "assert.h"
+
+using namespace std;
 
 int main()
 {
     BasicEngine search_engine;
     vector<string> ret;
-    search_engine.SEARCH_ENGINE__Search("ABAB", &ret);
+    string pattern = "AAB";
+    search_engine.SEARCH_ENGINE__Search(pattern, &ret);
 
-    USR_FCT__DisplayAllWords(&ret);
+    #ifndef NDEBUG
+    search_engine.SEARCH_ENGINE__DisplaySearchResults();
+    //assert (ret.size() == 1);
+    //assert (ret[0] == pattern);
+    #else
+    cout << "NDEBUG should be disabled" << endl;
+    #endif
 	return 0;
 }

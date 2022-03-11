@@ -1,12 +1,16 @@
 #include "engine.h"
 
+TOOLS__T_MARK time_table;
+
 /**
  * @brief WordsList::WordsList
  * Constructor
  */
 Engine::Engine(): _words_list(), _pattern_to_search(""), _last_search_results(), _nb_found_results(0), _nb_threads(1)
 {
-    //int _search_durations[];
+    // Get word list duration for the 1st element
+    _search_durations[0] = _words_list.WORDS_LIST__GetSortDuration();
+    _search_durations[1] = (double) 0;
 }
 
 Engine::Engine(const int nb_thread): _words_list(), _pattern_to_search(""), _last_search_results(), _nb_found_results(0), _nb_threads(nb_thread)
@@ -52,11 +56,44 @@ void Engine::SEARCH_ENGINE__SetNbThreads(const int nb_threads)
 
 void Engine::SEARCH_ENGINE__Search(string pattern, vector<string>* ret)
 {
+
     if (pattern != "") {
         SEARCH_ENGINE__SetSearchPattern(pattern);
 
+        TOOLS__MARK_INIT(&time_table);
+
         SEARCH_ENGINE__SearchAlgorithm(ret);
-    } 
+
+        TOOLS__MARK_END(&time_table);
+    }
+
+    TOOLS__ComputeSearchTime(&time_table, &(this->_search_durations[TOOLS__NB_DURATIONS-1]));
+
+    //memcpy(&(this->_last_search_results), ret, sizeof(ret));
+    this->_last_search_results = *ret;
+    this->_nb_found_results = sizeof(ret);
+}
+
+void Engine::SEARCH_ENGINE__DisplaySearchResults()
+{
+    SEARCH_ENGINE__DisplayWordsFound();
+
+    SEARCH_ENGINE__DisplaySearchDuration();
+}
+
+void Engine::SEARCH_ENGINE__DisplayWordsFound()
+{
+    USR_FCT__DisplayAllWords(&(this->_last_search_results));
+}
+
+void Engine::SEARCH_ENGINE__DisplaySearchDuration()
+{
+    #ifdef INC_LIST_SORT
+    cout << "\n\n ******" << " PREPROCESS TIME = " << this->_search_durations[0] << " ****** \n\n" << endl;
+    cout << "\n\n ******" << " TOTAL TIME SEARCH = " << this->_search_durations[1] + this->_search_durations[1] << " ****** \n\n" << endl;
+    #else
+    cout << "\n\n ******" << " TIME ELAPSED DURING SEARCH = " << (this->_search_durations[1]/CLOCKS_PER_SEC)*1000 << " ms ****** \n\n" << endl;
+    #endif
 }
 
 void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)

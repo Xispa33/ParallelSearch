@@ -48,7 +48,7 @@ int WordsList::WORDS_LIST__GetWordsListSize()
 int WordsList::WORDS_LIST__ComputeWordsListSize()
 {
     int size = 0;
-    
+
     for (map<char,vector<string> >::iterator it_map=this->_words_list.begin(); it_map!=this->_words_list.end(); ++it_map) {
         size += it_map->second.size();
     }
@@ -58,9 +58,13 @@ int WordsList::WORDS_LIST__ComputeWordsListSize()
 
 void WordsList::WORDS_LIST__ProcessWordsList(vector<string>* words_vector)
 {
+    TOOLS__MARK_INIT(&(this->_sort_duration));
+
     WORDS_LIST__CreateWordsList(words_vector);
 
     WORDS_LIST__SortWordsList();
+
+    TOOLS__MARK_END(&(this->_sort_duration));
 
 }
 
@@ -103,6 +107,15 @@ void WordsList::WORD_LIST__DisplayWordsList()
 vector<string>* WordsList::WORDS_LIST__GetListFromKey(char key)
 {
     return &(this->_words_list[key]);
+}
+
+double WordsList::WORDS_LIST__GetSortDuration()
+{
+    double ret = 0.0;
+
+    TOOLS__ComputeSearchTime(&(this->_sort_duration), &ret);
+
+    return ret;
 }
 
 WordsList::~WordsList()

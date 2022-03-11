@@ -8,6 +8,7 @@ project(engine VERSION 1.0)
 add_library(libeng
     src/engine.cpp
     ../words_list/src/words_list.cpp
+    ../tools/src/tools.cpp
     ../../usr_functions/src/usr_fct.cpp
     #../words_list/inc/words_list.h
     #../../usr_functions/inc/usr_fct.h
@@ -16,6 +17,7 @@ add_library(libeng
 target_include_directories(libeng PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/inc 
     ../../usr_functions/inc 
+    ../tools/inc
     ../words_list/inc)
 
 # If PUBLIC is changed to PRIVATE, the constant CXX_VERSION will no 

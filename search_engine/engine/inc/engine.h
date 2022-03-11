@@ -2,7 +2,10 @@
 #define ENGINE_H
 
 #include <iostream>
+#include <time.h>
+
 #include "words_list.h"
+#include "tools.h"
 
 using namespace std;
 
@@ -16,6 +19,7 @@ class Engine
         void SEARCH_ENGINE__Search(string pattern, vector<string>* ret);
         string SEARCH_ENGINE__GetSearchPattern();
         int SEARCH_ENGINE__GetNbThreads();
+        void SEARCH_ENGINE__DisplaySearchResults();
     
     protected:
         // Methods
@@ -23,6 +27,8 @@ class Engine
         //virtual void SEARCH_ENGINE__StopEngine() = 0;
         void SEARCH_ENGINE__SetSearchPattern(const string pattern);
         void SEARCH_ENGINE__SetNbThreads(const int nb_threads);
+        void SEARCH_ENGINE__DisplaySearchDuration();
+        void SEARCH_ENGINE__DisplayWordsFound();
 
         //void SEARCH_ENGINE__GetTotalSearchDuration();
         //void SEARCH_ENGINE__GetIthSearchDuration(int i);
@@ -31,9 +37,9 @@ class Engine
         WordsList _words_list;
         string _pattern_to_search;
         vector<string> _last_search_results;
-        //int _search_durations[];
         int _nb_found_results;
         int _nb_threads;
+        double _search_durations[TOOLS__NB_DURATIONS];
 };
 
 class BasicEngine : public Engine

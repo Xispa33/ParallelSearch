@@ -11,7 +11,9 @@
 #include <algorithm>
 #include <random>
 #include <chrono>
-#include <usr_fct.h>     
+
+#include "usr_fct.h"
+#include "tools.h"
 
 using namespace std;
 
@@ -26,6 +28,7 @@ class WordsList
         int WORDS_LIST__GetWordsListSize();
         void WORD_LIST__DisplayWordsList();
         vector<string>* WORDS_LIST__GetListFromKey(char key);
+        double WORDS_LIST__GetSortDuration();
 
     private:
         // Methods
@@ -39,5 +42,6 @@ class WordsList
         // Attributes
         map<char, vector<string> > _words_list;
         int _words_list_size;
+        TOOLS__T_MARK _sort_duration;
 };
 #endif
