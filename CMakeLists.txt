@@ -1,21 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
-project(PARALLEL_SEARCH VERSION 1.0.0)
+project(PARALLEL-SEARCH VERSION 1.0.0)
 
-enable_testing()
+#enable_testing()
 
-# parallel_search folder contains different librairies needed for 
-# the creation of the executable. Each library corresponds to a class.
-# All libraries need to be compiled before main librairy.
-#add_subdirectory(parallel_search/threads)
-#add_subdirectory(parallel_search/client)
-#add_subdirectory(parallel_search/server)
-add_subdirectory(parallel_search/usr_functions)
-add_subdirectory(parallel_search/server/words_list)
-add_subdirectory(parallel_search/server/search_engine)
-add_subdirectory(parallel_search/server/main)
-
-add_subdirectory(parallel_search/client/main)
-
-
-add_subdirectory(tests/parallel_search)
-add_subdirectory(tests/googletest)
+add_subdirectory(search_engine)
+add_subdirectory(tests)
