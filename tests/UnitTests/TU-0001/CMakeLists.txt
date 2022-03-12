@@ -1,16 +1,19 @@
 cmake_minimum_required(VERSION 3.8)
 project(TU-0001 VERSION 1.0)
 
+include (../../../cmake/usr_paths.cmake)
+
 set(TEST_NAME tu_1)
 
-set(SRC test_1.cpp ../../../usr_functions/src/usr_fct.cpp)
-include_directories(../../../usr_functions/inc)
+set(SRC test_1.cpp ${USR_FCT_SRC_DIR}/usr_fct.cpp)
+
+include_directories(${USR_FCT_INC_DIR})
 
 add_custom_target(${PROJECT_NAME}.build
     COMMAND make
 )
 add_custom_target(${PROJECT_NAME}.run
-  COMMAND /Users/brice/Desktop/Codes/ParallelSearch/build/tests/UnitTests/TU-0001/tu_1
+  COMMAND ${BUILD_UNIT_TESTS_DIR}/TU-0001/tu_1
   DEPENDS ${PROJECT_NAME}.build
 )
 

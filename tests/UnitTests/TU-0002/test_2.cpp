@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "usr_fct.h"
-//#include "words_list.h"
 
 // ****** This test tests usr_fct overloaded functions. 
 // Overloading is done in current usr_functions directory ******

@@ -92,7 +92,7 @@ void Engine::SEARCH_ENGINE__DisplaySearchDuration()
     cout << "\n\n ******" << " PREPROCESS TIME = " << this->_search_durations[0] << " ****** \n\n" << endl;
     cout << "\n\n ******" << " TOTAL TIME SEARCH = " << this->_search_durations[1] + this->_search_durations[1] << " ****** \n\n" << endl;
     #else
-    cout << "\n\n ******" << " TIME ELAPSED DURING SEARCH = " << (this->_search_durations[1]/CLOCKS_PER_SEC)*1000 << " ms ****** \n\n" << endl;
+    cout << "\n\n ******" << " TIME ELAPSED DURING SEARCH = " << this->_search_durations[1] << " ms ****** \n\n" << endl;
     #endif
 }
 

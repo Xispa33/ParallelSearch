@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "engine.h"
 
-
 // ****** This test tests engine module (just the construction of an engine object) ******
 
 using namespace std;
