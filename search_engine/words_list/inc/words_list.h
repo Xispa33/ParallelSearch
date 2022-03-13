@@ -1,3 +1,7 @@
+/**
+ * @file words_list.h
+ */
+
 #ifndef WORDS_LIST_H
 #define WORDS_LIST_H
 
@@ -19,6 +23,9 @@ using namespace std;
 
 #define WORDS_LIST__C_NB_CHAR_ALPHABET (26) 
 
+/**
+ * Implementation of the WordsList class.
+ */
 class WordsList
 {
     public:

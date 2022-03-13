@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.18)
 project(engine VERSION 1.0)
 
-include (/Users/brice/Desktop/Codes/ParallelSearch/cmake/usr_paths.cmake)
+include (../../cmake/usr_paths.cmake)
 
 #message(STATUS "WORDS_LIST_SRC_DIR = ${WORDS_LIST_SRC_DIR}")
-set(LIBNAME ${CMAKE_PROJECT_NAME})
+set(LIBNAME lengine)
 
 # First argument is the name of the library, next the files to compile to generate the library.
 add_library(${LIBNAME}

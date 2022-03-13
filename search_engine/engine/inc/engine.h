@@ -1,3 +1,7 @@
+/**
+ * @file engine.h
+ */
+
 #ifndef ENGINE_H
 #define ENGINE_H
 
@@ -9,6 +13,9 @@
 
 using namespace std;
 
+/**
+ * Implementation of the engine class (abstract class)
+ */
 class Engine
 {
     public:
@@ -24,14 +31,10 @@ class Engine
     protected:
         // Methods
         virtual void SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret) = 0;
-        //virtual void SEARCH_ENGINE__StopEngine() = 0;
         void SEARCH_ENGINE__SetSearchPattern(const string pattern);
         void SEARCH_ENGINE__SetNbThreads(const int nb_threads);
         void SEARCH_ENGINE__DisplaySearchDuration();
         void SEARCH_ENGINE__DisplayWordsFound();
-
-        //void SEARCH_ENGINE__GetTotalSearchDuration();
-        //void SEARCH_ENGINE__GetIthSearchDuration(int i);
 
         // Attributes
         WordsList _words_list;
@@ -42,6 +45,10 @@ class Engine
         double _search_durations[TOOLS__NB_DURATIONS];
 };
 
+/**
+ * Implementation of the Basicengine class, inherits from
+ * the engine class.
+ */
 class BasicEngine : public Engine
 {
     public:
@@ -51,7 +58,6 @@ class BasicEngine : public Engine
     
     protected:
         // Methods
-        void SEARCH_ENGINE__SearchAlgorithm(vector<string>*);
-        //void SEARCH_ENGINE__StopEngine();
+        void SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret);
 };
 #endif
