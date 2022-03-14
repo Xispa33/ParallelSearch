@@ -35,14 +35,21 @@ Engine::Engine(const int nb_thread): _words_list(), _pattern_to_search(""), _las
 /**
  * @brief BasicEngine object constructor
  */
-BasicEngine::BasicEngine()
+BasicEngine::BasicEngine() : Engine(1)
 {
 }
 
 /**
  * @brief BasicEngine object constructor
  */
-BasicEngine::BasicEngine(const int nb_thread) : Engine(nb_thread) 
+/*BasicEngine::BasicEngine(const int nb_thread) : Engine(1) 
+{
+}*/
+
+/**
+ * @brief EngineWithThreads object constructor
+ */
+EngineWithThreads::EngineWithThreads(const int nb_thread) : Engine(nb_thread) 
 {
 }
 
@@ -55,6 +62,11 @@ Engine::~Engine() { }
  * @brief BasicEngine object destructor
  */
 BasicEngine::~BasicEngine() { }
+
+/**
+ * @brief EngineWithThreads object destructor
+ */
+EngineWithThreads::~EngineWithThreads() { }
 
 /**
  * @brief SEARCH_ENGINE__GetSearchPattern function
@@ -173,8 +185,9 @@ void Engine::SEARCH_ENGINE__DisplaySearchDuration()
 {
     /* */
     #ifdef INC_LIST_SORT
-    cout << "\n\n ******" << " PREPROCESS TIME = " << this->_search_durations[0] << " ****** \n\n" << endl;
-    cout << "\n\n ******" << " TOTAL TIME SEARCH = " << this->_search_durations[1] + this->_search_durations[1] << " ****** \n\n" << endl;
+    cout << " ******" << " PREPROCESS TIME = " << this->_search_durations[0] << " ms ******" << endl;
+    cout << " ******" << " TIME ELAPSED DURING SEARCH = " << this->_search_durations[1] << " ms ******" << endl;
+    cout << " ******" << " TOTAL TIME ELAPSED DURING SEARCH = " << this->_search_durations[0] + this->_search_durations[1] << " ms ****** \n\n" << endl;
     #else
     cout << "\n\n ******" << " TIME ELAPSED DURING SEARCH = " << this->_search_durations[1] << " ms ****** \n\n" << endl;
     #endif
@@ -188,23 +201,30 @@ void Engine::SEARCH_ENGINE__DisplaySearchDuration()
  * @param ret pointer on a vector<string> holding the search's results
  * 
  * @return ret
+ *      
  */
 void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
 {
-    vector<string> potential_words;
-    string::iterator it_tmp;
-    char first_letter = SEARCH_ENGINE__GetSearchPattern()[0];
-    int i = 0;
-    string curr_word;
+    char first_letter, current_letter;
+    int i = 1;
+    string pattern;
+    
+    pattern = SEARCH_ENGINE__GetSearchPattern();
+    first_letter = pattern[0];
 
-    potential_words = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
+    if (pattern.size() == 1) {
+        *ret = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
+        return; 
+    } else {
+        vector<string> potential_words;
 
-    for (vector<string>::iterator it_word = potential_words.begin(); it_word != potential_words.end(); ++it_word) {
-           i = 0;
-           curr_word = *it_word;
-           for (string::iterator it_pattern_letter = this->_pattern_to_search.begin(); it_pattern_letter != this->_pattern_to_search.end(); ++it_pattern_letter) {
-               if (*it_pattern_letter != curr_word[i]) {
-                it_tmp = it_pattern_letter;
+        potential_words = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
+
+        for (vector<string>::iterator it_word = potential_words.begin(); it_word != potential_words.end(); ++it_word) {
+           i = 1;
+           for (string::iterator it_pattern_letter = (this->_pattern_to_search.begin()+1); it_pattern_letter != this->_pattern_to_search.end(); ++it_pattern_letter) {
+               current_letter = *it_pattern_letter;
+               if (*it_pattern_letter != (*it_word)[i]) {
                 break;
                }
                 i++;
@@ -214,13 +234,28 @@ void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
                     break;
                 }
             }
-            if (curr_word[i] != *it_tmp) {
-                if ((int) curr_word[i] > (int) *it_tmp) {
-                    return;
-                } 
-            }
-    }
+
+            if ((int) (*it_word)[i] > (int) current_letter) {
+                return;
+            } 
+        }
+        //USR_FCT__DisplayAllWords(&(ret));
+        return;
+    } 
+}
+
+/**
+ * @brief SEARCH_ENGINE__SearchAlgorithm function
+ * 
+ * This function implements the search algorithm.
+ * 
+ * @param ret pointer on a vector<string> holding the search's results
+ * 
+ * @return ret
+ *      
+ */
+void EngineWithThreads::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
+{
     //USR_FCT__DisplayAllWords(&(ret));
     return;
 }
-

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.0)
 project(TI-0002 VERSION 1.0)
 
 include (../../../cmake/usr_paths.cmake)

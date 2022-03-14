@@ -53,8 +53,24 @@ class BasicEngine : public Engine
 {
     public:
         BasicEngine();
-        BasicEngine(const int nb_thread);
+        //BasicEngine(const int nb_thread);
         ~BasicEngine();
+    
+    protected:
+        // Methods
+        void SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret);
+};
+
+/**
+ * Implementation of the EngineWithThreads class, inherits from
+ * the engine class.
+ */
+class EngineWithThreads : public Engine
+{
+    public:
+        //EngineWithThreads();
+        EngineWithThreads(const int nb_thread);
+        ~EngineWithThreads();
     
     protected:
         // Methods

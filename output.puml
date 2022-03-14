@@ -1,0 +1,91 @@
+@startuml
+
+
+
+
+
+/' Objects '/
+
+class BasicEngine {
+	+BasicEngine()
+	+~BasicEngine()
+	#SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret) : void
+}
+
+
+abstract class Engine {
+	+Engine()
+	+Engine(const int nb_thread)
+	+~Engine()
+	#_words_list : WordsList
+	#_search_durations : double
+	+SEARCH_ENGINE__GetNbThreads() : int
+	#_nb_found_results : int
+	#_nb_threads : int
+	+SEARCH_ENGINE__GetSearchPattern() : string
+	#_pattern_to_search : string
+	#_last_search_results : vector<string>
+	#SEARCH_ENGINE__DisplaySearchDuration() : void
+	+SEARCH_ENGINE__DisplaySearchResults() : void
+	#SEARCH_ENGINE__DisplayWordsFound() : void
+	+SEARCH_ENGINE__Search(string pattern, vector<string>* ret) : void
+	#{abstract} SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret) : void
+	#SEARCH_ENGINE__SetNbThreads(const int nb_threads) : void
+	#SEARCH_ENGINE__SetSearchPattern(const string pattern) : void
+}
+
+
+class EngineWithThreads {
+	+EngineWithThreads(const int nb_thread)
+	+~EngineWithThreads()
+	#SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret) : void
+}
+
+
+class WordsList {
+	+WordsList()
+	+~WordsList()
+	-_sort_duration : TOOLS__T_MARK
+	+WORDS_LIST__GetSortDuration() : double
+	-WORDS_LIST__ComputeWordsListSize() : int
+	+WORDS_LIST__GetWordsListSize() : int
+	-_words_list_size : int
+	-_words_list : map<char, vector<string>>
+	+WORDS_LIST__GetListFromKey(char key) : vector<string>*
+	-WORDS_LIST__CreateWordsList(vector<string>* words_vector) : void
+	-WORDS_LIST__Init(vector<string>* words_vector) : void
+	-WORDS_LIST__ProcessWordsList(vector<string>* words_vector) : void
+	-WORDS_LIST__SetWordsListSize(const int size) : void
+	-WORDS_LIST__SortWordsList() : void
+	+WORD_LIST__DisplayWordsList() : void
+}
+
+
+
+
+
+/' Inheritance relationships '/
+
+.Engine <|-- .BasicEngine
+
+
+.Engine <|-- .EngineWithThreads
+
+
+
+
+
+/' Aggregation relationships '/
+
+.Engine *-- .WordsList
+
+
+
+
+
+
+/' Nested objects '/
+
+
+
+@enduml

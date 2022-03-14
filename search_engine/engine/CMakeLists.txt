@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.0)
 project(engine VERSION 1.0)
 
 include (../../cmake/usr_paths.cmake)
 
-#message(STATUS "WORDS_LIST_SRC_DIR = ${WORDS_LIST_SRC_DIR}")
 set(LIBNAME lengine)
 
 # First argument is the name of the library, next the files to compile to generate the library.
@@ -25,6 +24,7 @@ include_directories(${USR_FCT_INC_DIR}
 #    ${USR_FCT_INC_DIR}
 #)
 
+#target_compile_definitions(${LIBNAME} PUBLIC CXX_VERSION=11 INC_LIST_SORT)
 target_compile_definitions(${LIBNAME} PUBLIC CXX_VERSION=11)
 
 # Commands to run when build the <engine> target

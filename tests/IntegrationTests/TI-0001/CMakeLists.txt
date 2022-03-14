@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.0)
 project(TI-0001 VERSION 1.0)
 
 include (../../../cmake/usr_paths.cmake)
@@ -31,3 +31,7 @@ target_link_libraries(${TEST_NAME} PUBLIC
 )
 
 #set (CMAKE_CXX_FLAGS "-DNDEBUG")
+#set(COMPILER_FLAGS "INC_LIST_SORT")
+#add_definitions(${COMPILER_FLAGS})
+#set(CMAKE_CXX_FLAGS "${COMPILER_FLAGS}")
+#SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
