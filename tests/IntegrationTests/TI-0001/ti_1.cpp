@@ -7,7 +7,7 @@ int main()
 {
     BasicEngine search_engine;
     vector<string> ret;
-    string pattern = "CCCC";
+    string pattern = "CCA";
     search_engine.SEARCH_ENGINE__Search(pattern, &ret);
 
     #ifndef NDEBUG

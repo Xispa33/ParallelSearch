@@ -49,14 +49,15 @@ Search_Algorithm(pattern, words_list)
         if letter != word[i]: 
             break;
         end if;
-     
+
+        i = i + 1
         if i == pattern.length():
             Add word to ret;
             break;
         end if;
     end for;
 
-    if (ascii_value(letter) != ascii_value(word[i])):
+    if (ascii_value(letter) > ascii_value(word[i])):
         exit;
     end if
  end for;
