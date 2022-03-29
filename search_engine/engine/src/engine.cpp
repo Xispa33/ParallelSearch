@@ -3,6 +3,9 @@
  */
 
 #include "engine.h"
+//#include <algorithm>
+
+void task1(int& a, int& b);
 
 TOOLS__T_MARK time_table;
 
@@ -49,8 +52,9 @@ BasicEngine::BasicEngine() : Engine(1)
 /**
  * @brief EngineWithThreads object constructor
  */
-EngineWithThreads::EngineWithThreads(const int nb_thread) : Engine(nb_thread) 
+EngineWithThreads::EngineWithThreads(const int nb_thread) 
 {
+    this->_nb_threads = nb_thread;
 }
 
 /**
@@ -245,6 +249,33 @@ void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
 }
 
 /**
+ * @brief SEARCH_ENGINE__Search function
+ * 
+ * This function triggers a search. pattern is searched among the list of words
+ * and the results are stored in ret. The duration of the search is also computed.
+ * 
+ * @param pattern pattern to search
+ * @param ret pointer on a vector<string> holding the search's results
+ * 
+ * @return ret
+ */
+void EngineWithThreads::SEARCH_ENGINE__Search(string pattern, vector<string>* ret)
+{
+
+    if (pattern != "") {
+        SEARCH_ENGINE__SetSearchPattern(pattern);
+
+        SEARCH_ENGINE__SearchAlgorithm(ret);
+
+        /* Compute the search's duration */
+        TOOLS__ComputeSearchTime(&time_table, &(this->_search_durations[TOOLS__NB_DURATIONS-1]));
+
+        //this->_last_search_results = *ret;
+        //this->_nb_found_results = sizeof(ret);
+    }
+}
+
+/**
  * @brief SEARCH_ENGINE__SearchAlgorithm function
  * 
  * This function implements the search algorithm.
@@ -256,6 +287,77 @@ void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
  */
 void EngineWithThreads::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
 {
+    char first_letter, current_letter;
+    int i = 1;
+    string pattern;
+    
+    pattern = SEARCH_ENGINE__GetSearchPattern();
+    first_letter = pattern[0];
+
+    if (pattern.size() == 1) {
+        *ret = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
+        return; 
+    } else {
+        vector<string> potential_words;
+
+        potential_words = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
+
+        SEARCH_ENGINE__RunThreadedSearch(&potential_words);
+    }
+    //USR_FCT__DisplayAllWords(&(ret));
+    //cout << "LENGTH SIZE = " << ret->size() << endl;
+    return;
+}
+
+void EngineWithThreads::SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vector<string>& potential_words)
+{
+    char current_letter;
+    int i = 1;
+
+    for (vector<string>::iterator it_word = potential_words.begin(); it_word != potential_words.end(); ++it_word) {
+        i = 1;
+        for (string::iterator it_pattern_letter = (this->_pattern_to_search.begin()+1); it_pattern_letter != this->_pattern_to_search.end(); ++it_pattern_letter) {
+            current_letter = *it_pattern_letter;
+            if (*it_pattern_letter != (*it_word)[i]) {
+            break;
+            }
+            i++;
+            if (i == this->_pattern_to_search.size()) {
+                ret.push_back(*it_word);
+                i--;
+                break;
+            }
+        }
+
+        if ((int) (*it_word)[i] > (int) current_letter) {
+            return;
+        } 
+    }
     //USR_FCT__DisplayAllWords(&(ret));
     return;
 }
+
+void EngineWithThreads::SEARCH_ENGINE__RunThreadedSearch(vector<string>* potential_words)
+{
+    int size = (int) (potential_words->size());
+    vector<string> potential_words_1(potential_words->begin(), potential_words->begin() + (int) (size/2));
+    vector<string> potential_words_2(potential_words->begin() + (int) (size/2), potential_words->end());
+    vector<string> ret_1, ret_2;
+    
+    /* Mark the beggining of the search */
+    TOOLS__MARK_INIT(&time_table);
+
+    thread th1(&EngineWithThreads::SEARCH_ENGINE__RestrictedSearch, this, ref(ret_1), ref(potential_words_1));
+    thread th2(&EngineWithThreads::SEARCH_ENGINE__RestrictedSearch, this, ref(ret_2), ref(potential_words_2));
+
+    th1.join();
+    th2.join();
+
+    /* Mark the end of the search */
+    TOOLS__MARK_END(&time_table);
+
+    //MODIFY HERE
+    this->_last_search_results = ret_2;
+    this->_nb_found_results = sizeof(ret_2);
+}
+

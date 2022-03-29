@@ -26,6 +26,8 @@ include_directories(${USR_FCT_INC_DIR}
 
 #target_compile_definitions(${LIBNAME} PUBLIC CXX_VERSION=11 INC_LIST_SORT)
 target_compile_definitions(${LIBNAME} PUBLIC CXX_VERSION=11)
+set_property(TARGET ${LIBNAME} PROPERTY CXX_STANDARD 11)
+#target_compile_features(${LIBNAME} PUBLIC cxx_std_11)
 
 # Commands to run when build the <engine> target
 add_custom_target(${PROJECT_NAME}

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <time.h>
+#include <thread>
 
 #include "words_list.h"
 #include "tools.h"
@@ -65,13 +66,18 @@ class BasicEngine : public Engine
  * Implementation of the EngineWithThreads class, inherits from
  * the engine class.
  */
-class EngineWithThreads : public Engine
+class EngineWithThreads : public BasicEngine
 {
     public:
-        //EngineWithThreads();
         EngineWithThreads(const int nb_thread);
         ~EngineWithThreads();
-    
+
+        void SEARCH_ENGINE__Search(string pattern, vector<string>* ret);
+        void SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vector<string>& potential_words);
+
+    private:
+        vector<string> SEARCH_ENGINE__SplitWordsList(vector<string>* ret);
+        void SEARCH_ENGINE__RunThreadedSearch(vector<string>* potential_words);
     protected:
         // Methods
         void SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret);
