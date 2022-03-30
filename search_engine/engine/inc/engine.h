@@ -8,6 +8,7 @@
 #include <iostream>
 #include <time.h>
 #include <thread>
+#include <mutex>
 
 #include "words_list.h"
 #include "tools.h"
