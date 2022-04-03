@@ -25,6 +25,7 @@ export UNIT_TESTS_DIR = ${TESTS_DIR}/UnitTests
 export INTEGRATION_TESTS_DIR = ${TESTS_DIR}/IntegrationTests
 export BUILD_UNIT_TESTS_DIR = ${BUILD_TESTS_DIR}/UnitTests
 export BUILD_INTEGRATION_TESTS_DIR = ${BUILD_TESTS_DIR}/IntegrationTests
+export CPPCHECK_OUT_FILE = cppcheck_issues.xml
 #export TEST_DIR = $(WORKSPACE_DIR)/tests
 #export UNIT_TEST_DIR = $(TEST_DIR)/UnitTests
 #export INTEGRATION_TEST_DIR = $(TEST_DIR)/IntegrationTests

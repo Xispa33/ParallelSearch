@@ -339,7 +339,6 @@ void EngineWithThreads::SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vec
 
 void EngineWithThreads::SEARCH_ENGINE__RunThreadedSearch(vector<string>* potential_words)
 {
-    /*
     vector<thread> threadVect;
     vector<string> ret_1;
     vector<string> potential_words_1;
@@ -347,13 +346,16 @@ void EngineWithThreads::SEARCH_ENGINE__RunThreadedSearch(vector<string>* potenti
     int size = (int) (potential_words->size()) - 1;
     int step = (int) (size/this->_nb_threads);
     int end = start + step;
-    */
+
     /* Mark the beggining of the search */
-    /*
     TOOLS__MARK_INIT(&time_table);
 
     for(unsigned int x = 0; x < this->_nb_threads; x++){
+        // A lot of time is lost splitting the vector
+        //clock_t time_start = clock();
         potential_words_1 = vector<string>(potential_words->begin() + start, potential_words->begin() + end);
+        //clock_t time_end = clock();
+        //cout << "Time taken for thread[" << x << "] = " << (double) 1000*(time_end - time_start)/CLOCKS_PER_SEC << " ms" << endl;
         threadVect.emplace_back(&EngineWithThreads::SEARCH_ENGINE__RestrictedSearch, this, ref(ret_1), ref(potential_words_1));
         start = end;
         end += step;
@@ -362,41 +364,43 @@ void EngineWithThreads::SEARCH_ENGINE__RunThreadedSearch(vector<string>* potenti
     for(int i = 0; i < this->_nb_threads; ++i){
         threadVect[i].join();
     }
-    */
+
     /* Mark the end of the search */
-    //TOOLS__MARK_END(&time_table);
+    TOOLS__MARK_END(&time_table);
 
     /* Compute the search's duration */
-    /*
     TOOLS__ComputeSearchTime(&time_table, &(this->_search_durations[TOOLS__NB_DURATIONS-1]));
     
     this->_last_search_results = ret_1;
     this->_nb_found_results = sizeof(this->_last_search_results);
-    */
-    
+
+    /* Mark the beggining of the search */
+    /*
+    TOOLS__MARK_INIT(&time_table);
+
     int size = (int) (potential_words->size());
     vector<string> potential_words_1(potential_words->begin(), potential_words->begin() + (int) (size/2));
     vector<string> potential_words_2(potential_words->begin() + (int) (size/2), potential_words->end());
     vector<string> ret_1, ret_2;
     
-    /* Mark the beggining of the search */
-    TOOLS__MARK_INIT(&time_table);
+    
 
     thread th1(&EngineWithThreads::SEARCH_ENGINE__RestrictedSearch, this, ref(ret_1), ref(potential_words_1));
     thread th2(&EngineWithThreads::SEARCH_ENGINE__RestrictedSearch, this, ref(ret_2), ref(potential_words_2));
 
     th1.join();
     th2.join();
-
+    */
     /* Mark the end of the search */
-    TOOLS__MARK_END(&time_table);
+    //TOOLS__MARK_END(&time_table);
     
     /* Compute the search's duration */
-    TOOLS__ComputeSearchTime(&time_table, &(this->_search_durations[TOOLS__NB_DURATIONS-1]));
+    //TOOLS__ComputeSearchTime(&time_table, &(this->_search_durations[TOOLS__NB_DURATIONS-1]));
 
+    /*
     this->_last_search_results = ret_1;
     this->_last_search_results.insert(this->_last_search_results.end(), ret_2.begin(), ret_2.end());
     this->_nb_found_results = sizeof(this->_last_search_results);
-    
+    */
 }
 

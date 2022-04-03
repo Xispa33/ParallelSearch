@@ -28,5 +28,7 @@
         "UNIT_TESTS_DIR":"/Users/brice/Desktop/Codes/ParallelSearch/tests/UnitTests",
         "INTEGRATION_TESTS_DIR":"/Users/brice/Desktop/Codes/ParallelSearch/tests/IntegrationTests",
         "BUILD_UNIT_TESTS_DIR":"/Users/brice/Desktop/Codes/ParallelSearch/build/tests/UnitTests",
-        "BUILD_INTEGRATION_TESTS_DIR":"/Users/brice/Desktop/Codes/ParallelSearch/build/tests/IntegrationTests"}
+        "BUILD_INTEGRATION_TESTS_DIR":"/Users/brice/Desktop/Codes/ParallelSearch/build/tests/IntegrationTests",
+        "RUN_MODE":"Coverage"
+    }
 }
