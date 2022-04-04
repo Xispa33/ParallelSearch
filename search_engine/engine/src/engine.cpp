@@ -207,7 +207,6 @@ void Engine::SEARCH_ENGINE__DisplaySearchDuration()
  * @return ret
  *      
  */
-mutex m;
 void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
 {
     char first_letter, current_letter;
@@ -218,9 +217,7 @@ void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
     first_letter = pattern[0];
 
     if (pattern.size() == 1) {
-        m.lock();
         *ret = *(this->_words_list.WORDS_LIST__GetListFromKey(first_letter));
-        m.unlock();
         return; 
     } else {
         vector<string> potential_words;
@@ -236,9 +233,7 @@ void BasicEngine::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
                }
                 i++;
                 if (i == this->_pattern_to_search.size()) {
-                    m.lock();
                     ret->push_back(*it_word);
-                    m.unlock();
                     i--;
                     break;
                 }
@@ -309,6 +304,7 @@ void EngineWithThreads::SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret)
     return;
 }
 
+mutex m;
 void EngineWithThreads::SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vector<string>& potential_words)
 {
     char current_letter;
@@ -323,7 +319,9 @@ void EngineWithThreads::SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vec
             }
             i++;
             if (i == this->_pattern_to_search.size()) {
+                m.lock();
                 ret.push_back(*it_word);
+                m.unlock();
                 i--;
                 break;
             }

@@ -65,4 +65,4 @@ Search_Algorithm(pattern, words_list)
 
 # Plant UML
 The figure below represents the UML diagram of the project.
-<center><img src="UML.png" description="UML diagram of PARALLELSEARCH repo" style="width:1000px;"></center>
+![output.iuml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/jonashackt/plantuml-markdown/master/example-uml.iuml)

@@ -15,7 +15,7 @@ help: ## Display help on each available target
 clean:
 	@echo "\n ********  Cleaning ... ********n\n"
 	rm -rf ${BUILD_DIR}
-	rm ${CPPCHECK_OUT_FILE}
+	rm -f ${CPPCHECK_OUT_FILE}
 	rm -rf Coverage/html
 
 gen:
@@ -52,8 +52,10 @@ cov-compute:
 	@echo "\n ********  Running computing coverage  ********n\n"
 	# Ajouter variable pour Coverage/html et campain.info
 	mkdir -p Coverage/html
-	lcov --directory build/tests/IntegrationTests/TI-0001/ --directory build/tests/IntegrationTests/TI-0003/ --directory build/tests/UnitTests/TU-0001/ --directory build/tests/UnitTests/TU-0002/ --directory build/tests/UnitTests/TU-0003/ --directory build/tests/UnitTests/TU-0004/ --capture --output-file Coverage/campain.info --rc lcov_branch_coverage=1
-	genhtml --branch-coverage Coverage/campain.info --output-directory Coverage/html/
+	#lcov --directory build/tests/IntegrationTests/TI-0001/ --directory build/tests/IntegrationTests/TI-0003/ --directory build/tests/UnitTests/TU-0001/ --directory build/tests/UnitTests/TU-0002/ --directory build/tests/UnitTests/TU-0003/ --directory build/tests/UnitTests/TU-0004/ --capture --output-file Coverage/campain.info --rc lcov_branch_coverage=1
+	lcov --directory . --no-external --capture --output-file Coverage/full_campain.info --rc lcov_branch_coverage=1
+	lcov --remove Coverage/full_campain.info "${PWD}/usr_fct/*" "${PWD}/tests/*" -o Coverage/restricted_campain.info --rc lcov_branch_coverage=1
+	genhtml --branch-coverage Coverage/restricted_campain.info --output-directory Coverage/html/
 	# lcov example : place tests folders in test_cov to generate campain.info. Then
 	# generation of a html report
 	#lcov --directory ../test_cov/ --capture --output-file campain.info --rc lcov_branch_coverage=1
@@ -71,5 +73,8 @@ sonar: cppcheck all
 	# Command to launch sonar analysis (add -X for debugging)
 	docker run --network=host --rm -e SONAR_HOST_URL="http://localhost:9000" -e SONAR_LOGIN="5bfe408324211b9d35509c05f4fa11e047b7ef78" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
 
+uml: 
+	@echo "\n ********  UML generation   ********n\n"
+	# hpp2plantuml -i search_engine/engine/inc/engine.h -i search_engine/words_list/inc/words_list.h -o output.puml
+
 # SONAR_LOGIN = 5bfe408324211b9d35509c05f4fa11e047b7ef78
-# UML command: hpp2plantuml -i search_engine/engine/inc/engine.h -i search_engine/words_list/inc/words_list.h -o output.puml
