@@ -65,4 +65,4 @@ Search_Algorithm(pattern, words_list)
 
 # Plant UML
 The figure below represents the UML diagram of the project.
-![output.iuml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/jonashackt/plantuml-markdown/master/example-uml.iuml)
+![output.iuml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Xispa33/ParallelSearch/develop/output.iuml)
