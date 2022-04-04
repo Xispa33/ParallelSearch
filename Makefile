@@ -50,9 +50,7 @@ all-tests: all
 
 cov-compute:
 	@echo "\n ********  Running computing coverage  ********n\n"
-	# Ajouter variable pour Coverage/html et campain.info
 	mkdir -p Coverage/html
-	#lcov --directory build/tests/IntegrationTests/TI-0001/ --directory build/tests/IntegrationTests/TI-0003/ --directory build/tests/UnitTests/TU-0001/ --directory build/tests/UnitTests/TU-0002/ --directory build/tests/UnitTests/TU-0003/ --directory build/tests/UnitTests/TU-0004/ --capture --output-file Coverage/campain.info --rc lcov_branch_coverage=1
 	lcov --directory . --no-external --capture --output-file Coverage/full_campain.info --rc lcov_branch_coverage=1
 	lcov --remove Coverage/full_campain.info "${PWD}/usr_fct/*" "${PWD}/tests/*" -o Coverage/restricted_campain.info --rc lcov_branch_coverage=1
 	genhtml --branch-coverage Coverage/restricted_campain.info --output-directory Coverage/html/
