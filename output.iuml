@@ -38,6 +38,10 @@ abstract class Engine {
 class EngineWithThreads {
 	+EngineWithThreads(const int nb_thread)
 	+~EngineWithThreads()
+	-SEARCH_ENGINE__SplitWordsList(vector<string>* ret) : vector<string>
+	+SEARCH_ENGINE__RestrictedSearch(vector<string>& ret, vector<string>& potential_words) : void
+	-SEARCH_ENGINE__RunThreadedSearch(vector<string>* potential_words) : void
+	+SEARCH_ENGINE__Search(string pattern, vector<string>* ret) : void
 	#SEARCH_ENGINE__SearchAlgorithm(vector<string>* ret) : void
 }
 
@@ -66,10 +70,10 @@ class WordsList {
 
 /' Inheritance relationships '/
 
+.BasicEngine <|-- .EngineWithThreads
+
+
 .Engine <|-- .BasicEngine
-
-
-.Engine <|-- .EngineWithThreads
 
 
 

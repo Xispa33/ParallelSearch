@@ -75,6 +75,6 @@ sonar: cppcheck all
 
 uml: 
 	@echo "\n ********  UML generation   ********n\n"
-	# hpp2plantuml -i search_engine/engine/inc/engine.h -i search_engine/words_list/inc/words_list.h -o output.puml
+	hpp2plantuml -i ${ENGINE_INC_DIR}/engine.h -i ${WORDS_LIST_INC_DIR}/words_list.h -o output.iuml
 
 # SONAR_LOGIN = 5bfe408324211b9d35509c05f4fa11e047b7ef78
