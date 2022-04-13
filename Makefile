@@ -40,13 +40,7 @@ cppcheck:
 
 all-tests: all
 	@echo "\n ********  Running all tests in ${RUN_MODE} mode ********n\n"
-	# Create bash script
-	make TU-0001.run RUN_MODE=${RUN_MODE}
-	make TU-0002.run RUN_MODE=${RUN_MODE}
-	make TU-0003.run RUN_MODE=${RUN_MODE}
-	make TU-0004.run RUN_MODE=${RUN_MODE}
-	make TI-0001.run RUN_MODE=${RUN_MODE}
-	make TI-0003.run RUN_MODE=${RUN_MODE}
+	./runTestCampain.sh IntegrationTests/ UnitTests/
 
 cov-compute:
 	@echo "\n ********  Running computing coverage  ********n\n"
