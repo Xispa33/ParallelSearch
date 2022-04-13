@@ -16,7 +16,7 @@ clean:
 	@echo "\n ********  Cleaning ... ********n\n"
 	rm -rf ${BUILD_DIR}
 	rm -f ${CPPCHECK_OUT_FILE}
-	rm -rf Coverage/html
+	rm -rf Coverage
 
 gen:
 	@echo "\n ********  Generating $@  ********n\n"
@@ -45,16 +45,15 @@ all-tests: all
 cov-compute:
 	@echo "\n ********  Running computing coverage  ********n\n"
 	mkdir -p Coverage/html
+	# Also done in codeCoverage.cmake, have to do it twice
 	lcov --directory . --no-external --capture --output-file Coverage/full_campain.info --rc lcov_branch_coverage=1
-	lcov --remove Coverage/full_campain.info "${PWD}/usr_fct/*" "${PWD}/tests/*" -o Coverage/restricted_campain.info --rc lcov_branch_coverage=1
-	genhtml --branch-coverage Coverage/restricted_campain.info --output-directory Coverage/html/
-	# lcov example : place tests folders in test_cov to generate campain.info. Then
-	# generation of a html report
-	#lcov --directory ../test_cov/ --capture --output-file campain.info --rc lcov_branch_coverage=1
-	#genhtml --branch-coverage campain.info --output-directory html/
-	# gcovr example: point to gda files and cpp files 
-	#gcovr build/tests/UnitTests/TU-0004/CMakeFiles/tu_4.dir/__/__/__/search_engine/words_list/src/ -r . --sonarqube -o out.xml
-	# Use gcovr in order to import coverage results in sonar. Xml files need to be in Cobertura format to be read by sonar. May have to delete functionToCoverage lines in xml
+	lcov --remove Coverage/full_campain.info "${PWD}/usr_fct/*" "${PWD}/tests/*" -o Coverage/filtered_campain.info --rc lcov_branch_coverage=1
+	# Generation of a html report
+	genhtml --branch-coverage Coverage/filtered_campain.info --output-directory Coverage/html/
+	# gcovr example: point to gda files and cpp files
+	# Use gcovr in order to import coverage results in sonar. Xml files need to be in Cobertura 
+	# format to be read by sonar. May have to delete functionToCoverage lines in xml
+	# gcovr build/tests/UnitTests/TU-0004/CMakeFiles/tu_4.dir/__/__/__/search_engine/words_list/src/ -r . --sonarqube -o out.xml
 
 sonar: cppcheck all
 	@echo "\n ********  Running Sonarqube Analysis  ********n\n"

@@ -20,6 +20,7 @@ add_custom_target(${PROJECT_NAME}.build
 
 target_link_libraries(${TEST_NAME} PUBLIC
   lengine
+  gtest_main
 )
 
 #set (CMAKE_CXX_FLAGS "-DNDEBUG")

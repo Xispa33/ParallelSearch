@@ -12,3 +12,5 @@ add_dependencies(${PROJECT_NAME}.build UnitTests.build IntegrationTests.build)
 
 add_custom_target(${PROJECT_NAME}.run)
 add_dependencies(${PROJECT_NAME}.run UnitTests.run IntegrationTests.run)
+
+add_subdirectory(googletest)

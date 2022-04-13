@@ -1,9 +1,11 @@
+#include <gtest/gtest.h>
+
 #include "engine.h"
 #include "assert.h"
 
 using namespace std;
 
-int main()
+int _main()
 {
     EngineWithThreads search_engine(2);
     vector<string> ret;
@@ -18,4 +20,10 @@ int main()
     cout << "NDEBUG should be disabled" << endl;
     #endif
 	return 0;
+}
+
+TEST(TI_0003, f3) {
+    //EXPECT_EQ(2, 2);
+    //EXPECT_NE(0, 1);
+    EXPECT_EQ(_main(), 0);
 }
