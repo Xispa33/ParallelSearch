@@ -1,4 +1,5 @@
 build/
-.scannerwork/
+.scannerwork/.sonar_lock
+.scannerwork/scanner-report/
 cppcheck_issues.xml
 Coverage/
