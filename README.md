@@ -66,3 +66,13 @@ Search_Algorithm(pattern, words_list)
 # Plant UML
 The figure below represents the UML diagram of the project.
 ![output.iuml](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/Xispa33/ParallelSearch/develop/output.iuml)
+
+# Tests
+## Unit Tests
+TU1, TU2, TU3, TU4: Unit tests using gtest framework
+
+## Integration Tests
+- TI1 et TI3: Integration tests
+- TI2: server/client test in C++
+- TI4: Mocks example for C function
+- TI5: Mock example for a C++ class function 

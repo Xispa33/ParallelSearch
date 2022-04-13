@@ -68,4 +68,6 @@ uml:
 	@echo "\n ********  UML generation   ********n\n"
 	hpp2plantuml -i ${ENGINE_INC_DIR}/engine.h -i ${WORDS_LIST_INC_DIR}/words_list.h -o output.iuml
 
+# Missing doc generation
+
 # SONAR_LOGIN = 5bfe408324211b9d35509c05f4fa11e047b7ef78
