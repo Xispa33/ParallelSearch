@@ -276,7 +276,7 @@ function(setup_target_for_coverage_lcov)
     )
     # Run tests
     set(LCOV_EXEC_TESTS_CMD 
-        ${Coverage_EXECUTABLE} ${Coverage_EXECUTABLE_ARGS}
+        ${Coverage_EXECUTABLE} ${Coverage_EXECUTABLE_ARGS} ${GTEST_OPTIONS}
     )    
     # Capturing lcov counters and generating report
     set(LCOV_CAPTURE_CMD 

@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
 project(TU-0001 VERSION 1.0)
 
-include (../../../cmake/usr_paths.cmake)
-
 set(TEST_NAME tu_1)
 
 set(SRC test_1.cpp ${USR_FCT_SRC_DIR}/usr_fct.cpp)
@@ -24,16 +22,4 @@ target_link_libraries(${TEST_NAME} PUBLIC
     gtest_main
 )
 
-if((RUN_MODE STREQUAL "Coverage"))
-    #message(WARNING "Code coverage results with an optimised (non-Debug) build may be misleading")
-    setup_target_for_coverage_lcov(
-        NAME ${PROJECT_NAME}.run  # Name for custom target.
-        EXECUTABLE ${TEST_NAME}   # Name of the test driver executable that runs the tests.
-    )
-else()
-    #message(FATAL_ERROR "Compiler is not GNU gcc! Aborting...")
-    add_custom_target(${PROJECT_NAME}.run
-        COMMAND ${BUILD_UNIT_TESTS_DIR}/TU-0001/tu_1
-        DEPENDS ${PROJECT_NAME}.build
-    )
-endif()
+target_special_setup(${PROJECT_NAME} ${TEST_NAME})
