@@ -7,7 +7,7 @@ else
   RUN_MODE = Release
 endif
 
-all: clean search-engine
+all: search-engine
 
 help: ## Display help on each available target
 	@echo "Command format : make TARGET"
@@ -58,9 +58,9 @@ cov-compute:
 sonar: cppcheck all
 	@echo "\n ********  Running Sonarqube Analysis  ********n\n"
 	# Command to stop and remove all running containers 
-	docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)
+	#docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)
 	# Command to start sonar server
-    docker run -d --name sonar_cxx -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonar/cxx:v1; 
+    docker run -d --name sonar_cxx -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonar/cxx:v1
 	# Command to launch sonar analysis (add -X for debugging)
 	docker run --network=host --rm -e SONAR_HOST_URL="http://localhost:9000" -e SONAR_LOGIN="5bfe408324211b9d35509c05f4fa11e047b7ef78" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
 
