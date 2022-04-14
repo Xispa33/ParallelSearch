@@ -33,6 +33,10 @@ gen:
 search-engine: gen
 	@echo "\n ********  Generating $@  ********n\n"
 	cd ${BUILD_DIR} && cmake .. && make $@
+	# To compile using clang
+	# cmake -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/clang++ ..
+	# To compile using gcc
+	# cmake -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/gcc ..
 
 cppcheck:
 	@echo "\n ********  Running cppcheck Analysis  ********n\n"
@@ -58,12 +62,11 @@ cov-compute:
 sonar: cppcheck all
 	@echo "\n ********  Running Sonarqube Analysis  ********n\n"
 	# Command to stop and remove all running containers 
-	#docker stop $(docker ps -a -q); docker rm $(docker ps -a -q)
+	docker stop `docker ps -a -q`; docker rm `docker ps -a -q`
 	# Command to start sonar server
-    docker run -d --name sonar_cxx -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonar/cxx:v1
+	docker run -d --name sonar_cxx -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonar/cxx:v1
 	# Command to launch sonar analysis (add -X for debugging)
-	docker run --network=host --rm -e SONAR_HOST_URL="http://localhost:9000" -e SONAR_LOGIN="5bfe408324211b9d35509c05f4fa11e047b7ef78" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
-
+	docker run --network=host --rm -e SONAR_HOST_URL="http://127.0.0.1:9000" -e SONAR_LOGIN="5bfe408324211b9d35509c05f4fa11e047b7ef78" -v "${PWD}:/usr/src" sonarsource/sonar-scanner-cli
 uml: 
 	@echo "\n ********  UML generation   ********n\n"
 	hpp2plantuml -i ${ENGINE_INC_DIR}/engine.h -i ${WORDS_LIST_INC_DIR}/words_list.h -o output.iuml

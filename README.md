@@ -5,6 +5,8 @@
 - [Technical choices](#Technical-choices)
 - [Search algorithm](#Search-algorithm)
 - [Plant UML](#Plant-UML)
+- [Tests](#Tests)
+- [Dependencies](#Dependencies)
 
 # Setup
 To clone this repository, run the command:
@@ -76,3 +78,11 @@ TU1, TU2, TU3, TU4: Unit tests using gtest framework
 - TI2: server/client test in C++
 - TI4: Mocks example for C function
 - TI5: Mock example for a C++ class function 
+
+# Dependencies
+- gcovr, lcov, gcov, genhtml
+- sonar
+- cmake
+- cppcheck
+- plantuml
+- hpp2plantuml
