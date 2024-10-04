@@ -7,13 +7,13 @@ using namespace std;
 
 int _main()
 {
-    BasicEngine search_engine;
+    BasicEngine *search_engine = new BasicEngine();
     vector<string> ret;
     string pattern = "CCA";
-    search_engine.SEARCH_ENGINE__Search(pattern, &ret);
+    search_engine->SEARCH_ENGINE__Search(pattern, &ret);
 
     #ifndef NDEBUG
-    search_engine.SEARCH_ENGINE__DisplaySearchResults();
+    search_engine->SEARCH_ENGINE__DisplaySearchResults();
     
     //assert (ret.size() == 1);
     //assert (ret[0] == pattern);

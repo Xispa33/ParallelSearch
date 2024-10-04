@@ -7,14 +7,15 @@ using namespace std;
 
 int _main()
 {
-    EngineWithThreads search_engine(2);
+    // EngineWithThreads search_engine(2);
+    EngineWithThreads *search_engine = new EngineWithThreads(2);
     vector<string> ret;
     string pattern = "CCA";
-    search_engine.SEARCH_ENGINE__Search(pattern, &ret);
+    search_engine->SEARCH_ENGINE__Search(pattern, &ret);
 
     #ifndef NDEBUG
-    search_engine.SEARCH_ENGINE__DisplaySearchResults();
-    //assert (ret.size() == 1);
+    search_engine->SEARCH_ENGINE__DisplaySearchResults();
+    assert (ret.size() == 1);
     //assert (ret[0] == pattern);
     #else
     cout << "NDEBUG should be disabled" << endl;

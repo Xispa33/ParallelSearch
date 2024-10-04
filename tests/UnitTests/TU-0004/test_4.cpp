@@ -6,9 +6,10 @@
 using namespace std;
 
 TEST(TU_0004, WordsList__Constructor) {
-    BasicEngine search_engine;
+    //BasicEngine search_engine;
+    BasicEngine *search_engine = new BasicEngine();
 
-    int nb_threads = search_engine.SEARCH_ENGINE__GetNbThreads();
+    int nb_threads = search_engine->SEARCH_ENGINE__GetNbThreads();
 
     EXPECT_EQ(nb_threads, 1);
 }

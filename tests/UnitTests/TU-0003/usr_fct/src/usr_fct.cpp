@@ -4,17 +4,20 @@ static void USR_FCT__ShuffleWords(vector<string>* words_vector);
 
 extern void USR_FCT__GetRandomWords(vector<string>* words_vector)
 {
-    string word(4, 'A');
+    string word(3, 'A');
     for (int i = 'A'; i <= 'C'; ++i) {
         word[0] = i; 
         for (int j = 'A'; j <= 'C'; ++j) {
             word[1] = j;
+            
             for (int k = 'A'; k <= 'C'; ++k) {
                 word[2] = k; 
+            /*
                 for (int l = 'A'; l <= 'C'; ++l) {
-                    word[3] = l; 
+                    word[3] = l;
+            */ 
                     words_vector->push_back(word);
-                }
+               // }
             }
         }
     }
